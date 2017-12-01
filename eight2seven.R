@@ -10,6 +10,13 @@
 ####              "NA"s are assigned in "Species" with the assignment and corresponding
 ####              bootstrap value at "SuperSpecies" level.
 ####
+#### Usage:       eightTOseven(taxa)
+####
+#### Arguments:   taxa  (Required). The output object of the "assignTaxonomy()"
+####                    function when the eHOMD training dataset was used to train
+####                    the RDP classifier. Note that taxLevels needs to be set as
+####                    taxLevels=c("Kingdom", "Phylum", "Class", "Order", "Family", 
+####                    "Genus", "SuperSpecies", "Species") in "assignTaxonomy()"
 ####               
 #### Author:      Yanmei Huang
 #### Version:     1.1
