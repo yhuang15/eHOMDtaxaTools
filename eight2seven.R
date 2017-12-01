@@ -32,9 +32,12 @@ eightTOseven = function(taxa)
     taxa$tax[is.na(taxa$tax[, 'Species']), 'Species'] = taxa$tax[is.na(taxa$tax[, 'Species']), 'SuperSpecies']
     taxa$tax = cbind(taxa$tax[, 1:6], taxa$tax[, 8])
     taxa$boot = cbind(taxa$boot[, 1:6], taxa$boot[, 8])
+    dimnames(taxa$tax)[[2]][7] = "Species"
+    dimnames(taxa$boot)[[2]][7] = "Species"
   } else {
     taxa[is.na(taxa[, 'Species']), 'Species'] = taxa[is.na(taxa[, 'Species']), 'SuperSpecies']
     taxa = cbind(taxa[, 1:6], taxa[, 8])
+    dimnames(taxa)[[2]][7] = "Species"
   }
   return (taxa)
 }
