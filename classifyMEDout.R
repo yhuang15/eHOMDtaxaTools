@@ -2,13 +2,13 @@
 
 ######################################################################################
 ####
-#### Description: This script runs RDP classifier on MED output fasta using a
+#### Description: This script runs RDP classifier on MED output fasta using an
 ####              eHOMD training data set
 ####
 #### Usage:       classifyMEDout.R MEDoutfile trainingset_file
 ####               
 #### Author:      Yanmei Huang
-#### Version:     1.0
+#### Version:     1.1
 #### Date:        2017-12-5
 ####
 ######################################################################################
@@ -34,6 +34,25 @@ dis = gsub(".fa.gz", "", dis)
 library(Biostrings); packageVersion("Biostrings")
 library(dada2); packageVersion("dada2")
 
+####{r, a function to merge SuperSpecies with Species}
+eightTOseven = function(taxa)
+{
+  if (length(names(classified)) > 0)
+  {
+    taxa$boot[is.na(taxa$tax[, 'Species']), 'Species'] = taxa$boot[is.na(taxa$tax[, 'Species']), 'SuperSpecies']
+    taxa$tax[is.na(taxa$tax[, 'Species']), 'Species'] = taxa$tax[is.na(taxa$tax[, 'Species']), 'SuperSpecies']
+    taxa$tax = cbind(taxa$tax[, 1:6], taxa$tax[, 8])
+    taxa$boot = cbind(taxa$boot[, 1:6], taxa$boot[, 8])
+    dimnames(taxa$tax)[[2]][7] = "Species"
+    dimnames(taxa$boot)[[2]][7] = "Species"
+  } else {
+    taxa[is.na(taxa[, 'Species']), 'Species'] = taxa[is.na(taxa[, 'Species']), 'SuperSpecies']
+    taxa = cbind(taxa[, 1:6], taxa[, 8])
+    dimnames(taxa)[[2]][7] = "Species"
+  }
+  return (taxa)
+}
+
 ####{r read fasta file}
 
 MEDnodes = readDNAStringSet(infile)
@@ -51,6 +70,9 @@ classified = assignTaxonomy(paste(MEDnodes),
 # save workspace image
 outfile = paste0(gsub(".fasta", "", infile), ".classified.", dis, ".Rdata")
 save.image(file = outfile )
+
+# merge SuperSpecies with Species
+classified = eightTOseven (classified)
 
 ####{r format output table}
 classified = cbind(as.data.frame(classified$tax)[, c('Kingdom', 'Phylum', 'Class', 
