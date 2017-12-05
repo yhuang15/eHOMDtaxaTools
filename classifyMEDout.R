@@ -48,6 +48,10 @@ classified = assignTaxonomy(paste(MEDnodes),
                                                "Genus", "SuperSpecies", 
                                                "Species"))
 
+# save workspace image
+outfile = paste0(gsub(".fasta", "", infile), ".classified.", dis, ".Rdata")
+save.image(file = outfile )
+
 ####{r format output table}
 classified = cbind(as.data.frame(classified$tax)[, c('Kingdom', 'Phylum', 'Class', 
                                                      'Order', 'Family', 
