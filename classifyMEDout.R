@@ -28,7 +28,7 @@ if (paste(commandArgs()[1], commandArgs()[2]) == "/usr/lib/R/bin/exec/R --vanill
 infile = as.character(commandArgs()[6 - offset])
 Tfile = as.character(commandArgs()[7 - offset])
 dis = gsub(".*Taxa_", "", Tfile)
-dis = gsub(".seqTab.fa.gz", "", dis)
+dis = gsub(".fa.gz", "", dis)
 
 
 
