@@ -37,7 +37,7 @@ library(dada2); packageVersion("dada2")
 ####{r, a function to merge SuperSpecies with Species}
 eightTOseven = function(taxa)
 {
-  if (length(names(classified)) > 0)
+  if (length(names(taxa)) > 0)
   {
     taxa$boot[is.na(taxa$tax[, 'Species']), 'Species'] = taxa$boot[is.na(taxa$tax[, 'Species']), 'SuperSpecies']
     taxa$tax[is.na(taxa$tax[, 'Species']), 'Species'] = taxa$tax[is.na(taxa$tax[, 'Species']), 'SuperSpecies']
