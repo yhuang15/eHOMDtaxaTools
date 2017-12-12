@@ -8,8 +8,8 @@
 #### Usage:       classifyMEDout.R MEDoutfile trainingset_file
 ####               
 #### Author:      Yanmei Huang
-#### Version:     1.1
-#### Date:        2017-12-5
+#### Version:     1.11
+#### Date:        2017-12-11
 ####
 ######################################################################################
 
@@ -29,6 +29,9 @@ infile = as.character(commandArgs()[6 - offset])
 Tfile = as.character(commandArgs()[7 - offset])
 dis = gsub(".*Taxa_", "", Tfile)
 dis = gsub(".fa.gz", "", dis)
+
+#### {r set minimal boot strap value. eHOMD research group decided it should be 90 }
+minBoot_val = 90
 
 ####{r load required packages}
 library(Biostrings); packageVersion("Biostrings")
@@ -61,7 +64,8 @@ MEDnodes = readDNAStringSet(infile)
 
 classified = assignTaxonomy(paste(MEDnodes), 
                                    Tfile, 
-                                   outputBootstraps=TRUE, 
+                                   outputBootstraps=TRUE,
+                                   minBoot = minBoot_val,
                                    taxLevels=c("Kingdom", "Phylum", 
                                                "Class", "Order", "Family", 
                                                "Genus", "SuperSpecies", 
